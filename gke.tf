@@ -13,6 +13,11 @@ variable "gke_num_nodes" {
   description = "number of gke nodes"
 }
 
+variable "gke_max_num_nodes" {
+  default     = 10
+  description = "Max number of gke nodes"
+}
+
 variable "machine_type" {
   description = "machine_type"
 }
@@ -52,11 +57,11 @@ resource "google_container_node_pool" "primary_nodes" {
   name       = "${google_container_cluster.primary.name}-node-pool"
   location   = var.location
   cluster    = google_container_cluster.primary.name
-  node_count = 1
+  node_count = var.gke_num_nodes
 
   autoscaling {
     min_node_count = 1
-    max_node_count = var.gke_num_nodes
+    max_node_count = var.gke_max_num_nodes
   }
 
   management {

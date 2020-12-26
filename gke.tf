@@ -49,9 +49,10 @@ resource "google_container_cluster" "primary" {
 
 # Separately Managed Node Pool
 resource "google_container_node_pool" "primary_nodes" {
-  name     = "${google_container_cluster.primary.name}-node-pool"
-  location = var.location
-  cluster  = google_container_cluster.primary.name
+  name       = "${google_container_cluster.primary.name}-node-pool"
+  location   = var.location
+  cluster    = google_container_cluster.primary.name
+  node_count = 1
 
   autoscaling {
     min_node_count = 1
